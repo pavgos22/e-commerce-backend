@@ -1,6 +1,8 @@
 package com.projects.auth.service;
 
+import com.projects.auth.entity.Role;
 import com.projects.auth.entity.User;
+import com.projects.auth.entity.UserRegisterDTO;
 import com.projects.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +18,7 @@ public class UserService {
 
     private User user;
 
-    public User saveUser(User user) {
+    private User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.saveAndFlush(user);
     }
@@ -27,5 +29,15 @@ public class UserService {
 
     public void validateToken(String token) {
         jwtService.validateToken(token);
+    }
+
+    public void register(UserRegisterDTO userRegisterDTO) {
+        User user = new User();
+        user.setLogin(userRegisterDTO.getLogin());
+        user.setPassword(userRegisterDTO.getPassword());
+        user.setEmail(userRegisterDTO.getEmail());
+        if(userRegisterDTO.getRole() != null)
+            user.setRole(userRegisterDTO.getRole());
+        else user.setRole(Role.USER);
     }
 }
