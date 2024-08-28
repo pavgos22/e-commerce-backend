@@ -1,6 +1,7 @@
 package com.projects.auth.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,9 @@ public class User implements UserDetails {
     private String uuid;
     private String login;
     private String password;
+    @Getter
     private String email;
+    @Getter
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "islock")
@@ -82,6 +85,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
 
     private void generateUuid() {
         if(uuid == null || uuid.isEmpty()) {
