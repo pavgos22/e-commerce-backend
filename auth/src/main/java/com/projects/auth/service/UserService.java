@@ -12,11 +12,20 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     private User user;
 
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.saveAndFlush(user);
+    }
+
+    public String generateToken(String username) {
+        return jwtService.generateToken(username);
+    }
+
+    public void validateToken(String token) {
+        jwtService.validateToken(token);
     }
 }
