@@ -6,7 +6,6 @@ import lombok.Getter;
 import java.sql.Timestamp;
 
 @Getter
-@Builder
 public class AuthResponse {
     private final String timestamp;
     private final String message;
