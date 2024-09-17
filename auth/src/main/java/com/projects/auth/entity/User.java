@@ -21,6 +21,7 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     private long id;
 
+    @Getter
     private String uuid;
     private String login;
     private String password;

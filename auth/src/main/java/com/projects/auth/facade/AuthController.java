@@ -1,6 +1,7 @@
 package com.projects.auth.facade;
 
 import com.projects.auth.entity.*;
+import com.projects.auth.exceptions.UserDontExistException;
 import com.projects.auth.exceptions.UserExistingWithMail;
 import com.projects.auth.exceptions.UserExistingWithName;
 import com.projects.auth.service.UserService;
