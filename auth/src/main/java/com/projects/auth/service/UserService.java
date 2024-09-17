@@ -79,10 +79,10 @@ public class UserService {
             jwtService.validateToken(token);
         }catch (IllegalArgumentException | ExpiredJwtException e){
             jwtService.validateToken(refresh);
-            Cookie refreshCokkie = cookiService.generateCookie("refresh", jwtService.refreshToken(refresh,refreshExp), refreshExp);
-            Cookie cookie = cookiService.generateCookie("Authorization", jwtService.refreshToken(refresh,exp), exp);
+            Cookie refreshCookie = cookieService.generateCookie("refresh", jwtService.refreshToken(refresh,refreshExp), refreshExp);
+            Cookie cookie = cookieService.generateCookie("Authorization", jwtService.refreshToken(refresh,exp), exp);
             response.addCookie(cookie);
-            response.addCookie(refreshCokkie);
+            response.addCookie(refreshCookie);
         }
 
     }
@@ -149,8 +149,8 @@ public class UserService {
         if (user != null) {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
             if (authenticate.isAuthenticated()) {
-                Cookie refresh = cookiService.generateCookie("refresh", generateToken(authRequest.getUsername(),refreshExp), refreshExp);
-                Cookie cookie = cookiService.generateCookie("Authorization", generateToken(authRequest.getUsername(),exp), exp);
+                Cookie refresh = cookieService.generateCookie("refresh", generateToken(authRequest.getUsername(),refreshExp), refreshExp);
+                Cookie cookie = cookieService.generateCookie("Authorization", generateToken(authRequest.getUsername(),exp), exp);
                 response.addCookie(cookie);
                 response.addCookie(refresh);
                 log.info("--START LoginService");
