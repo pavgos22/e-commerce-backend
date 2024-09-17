@@ -28,19 +28,23 @@ public class UserConfiguration {
         return new CustomUserDetailsService(userRepository);
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/register","/api/v1/auth/login","/api/v1/auth/validate").permitAll()
+                .requestMatchers("/api/v1/auth/register","/api/v1/auth/login","/api/v1/auth/validate","/api/v1/auth/reset-password","/api/v1/auth/activate","/api/v1/auth/logout","/api/v1/auth/auto-login","/api/v1/auth/logged-in").permitAll()
                 .and()
                 .build();
     }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return  new BCryptPasswordEncoder();
+    }
+
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
@@ -50,11 +54,5 @@ public class UserConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
+
